@@ -1,25 +1,28 @@
 import { useEffect, useState } from 'react';
-import {GithubSearch} from './interface';
-import type { RepositoriesQueryResponse } from '../types/repository-query';
+import { GithubSearch, ObjectType, TypeName } from './interface';
 import type { SearchInput } from './interface';
 
-export const useGithubSearch = (input: SearchInput) => {
-    const [data, setData] = useState<RepositoriesQueryResponse | null>(null);
+export const useGithubSearch = <T extends TypeName>(
+    type: T,
+    input: SearchInput
+) => {
+    const [data, setData] = useState<ObjectType<T> | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        GithubSearch(input)
+        GithubSearch(type, input)
             .then((data) => {
                 setError('');
                 setData(data);
                 setLoading(false);
-            }).catch((error) => {
+            })
+            .catch((error) => {
                 setError(error.message);
                 setData(null);
                 setLoading(false);
             });
-    }, [input]);
+    }, [type, input.page, input.per_page, input.query]);
 
     return { data, loading, error };
 };

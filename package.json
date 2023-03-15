@@ -1,6 +1,6 @@
 {
-  "name": "@ibrahimrahhal/github-search-api",
-  "version": "1.0.0",
+  "name": "@ibrahim-rahhal/github-search-api",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
